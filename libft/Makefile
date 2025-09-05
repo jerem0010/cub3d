@@ -42,14 +42,8 @@ LOADING_CHARS = ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "$(YELLOW)Compiling libft, Please wait...$(RESET)"
-	@for char in $(LOADING_CHARS); do \
-		printf "\r$(YELLOW)Compiling libft, Please wait... $$char$(RESET)"; \
-		sleep 0.1; \
-	done
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	@printf "\r$(GREEN)Great news ! $(WHITE)Libft compiled successfully !                 $(RESET)\n"
 
 $(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
@@ -57,11 +51,9 @@ $(OBJ_DIR)%.o: $(SRCS_DIR)%.c
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@printf "$(WHITE)Clean process completed for $(GREEN)Libft.$(RESET)\n"
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "$(WHITE)Full clean process completed for $(GREEN)Libft.$(RESET)\n"
 
 re: fclean all
 
