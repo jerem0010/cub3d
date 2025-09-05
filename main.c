@@ -36,7 +36,7 @@ int main(void) {
     a.frame.ptr = mlx_new_image(a.mlx, WIN_W, WIN_H);
     a.frame.addr = mlx_get_data_addr(a.frame.ptr, &a.frame.bpp, &a.frame.line_len, &a.frame.endian);
 
-    // map (remplace par le résultat de ton parsing)
+    // map (remplace par le résultat de parsing)
     a.map = gmap;
     a.map_w = map_w(a.map);
     a.map_h = map_h(a.map);

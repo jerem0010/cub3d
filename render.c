@@ -105,7 +105,7 @@ void render_frame(t_app *a) {
         int drawStart = -lineHeight / 2 + WIN_H / 2;
         int drawEnd   =  lineHeight / 2 + WIN_H / 2;
 
-        // texture selection: 0=N,1=E,2=S,3=W (à adapter selon ta map)
+        // texture selection: 0=N,1=E,2=S,3=W (à adapter selon map)
         int tex_id;
         if (side == 0 && rayDirX > 0) tex_id = 3; // W
         else if (side == 0 && rayDirX < 0) tex_id = 1; // E
