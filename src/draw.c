@@ -24,3 +24,24 @@ void	draw_vline(t_game *g, int x, int y0, int y1, int color)
 	for (int y = y0; y <= y1; y++)
 		img_put_pixel(&g->gfx.frame, x, y, color);
 }
+
+void	draw_tex_vline(t_game *g, int x, int y0, int y1,
+                    t_tex *tex, int tex_x, double step, double tex_pos)
+{
+	if (y0 < 0)
+	{
+		tex_pos += step * (-y0);
+		y0 = 0;
+	}
+	if (y1 >= g->gfx.h)
+		y1 = g->gfx.h - 1;
+	for (int y = y0; y <= y1; y++)
+	{
+		int tex_y = (int)tex_pos;
+		if (tex_y < 0) tex_y = 0;
+		if (tex_y >= tex->h) tex_y = tex->h - 1;
+		unsigned int color = tex_get_pixel(tex, tex_x, tex_y);
+		img_put_pixel(&g->gfx.frame, x, y, (int)color);
+		tex_pos += step;
+	}
+}

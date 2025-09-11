@@ -14,7 +14,7 @@ int	main(void)
 	g.colors.wall_nsew[3] = 0xFFFF33; /* W */
 
 	/* init input */
-	g.in = (t_input){0,0,0,0,0,0};
+	g.in = (t_input){0,0,0,0,0,0}; /* toutes touches relâchées ducoup a 0 et 1 quand appuye*/
 
 	if (world_init_demo(&g.world) != 0)
 		return (1);
@@ -22,6 +22,14 @@ int	main(void)
 	/* fenetre + framebuffer */
 	if (init_window(&g, 1024, 768, "cub3D") != 0)
 		return (world_free(&g.world), 1);
+
+	if (textures_load(&g,
+		"assets/north.xpm", "assets/south.xpm",
+		"assets/west.xpm",  "assets/east.xpm") != 0)
+	{
+		/* Pas bloquant dev: on peut continuer en couleurs unies */
+		g.has_tex = 0;
+	}
 
 	/* place le joueur dans un couloir safe */
 	player_init(&g, 2.5, 2.5, 1.0, 0.0);
@@ -34,4 +42,13 @@ int	main(void)
 	world_free(&g.world);
 	return (0);
 }
-
+// typedef struct s_game
+// {
+// 	t_mlx		gfx;
+// 	t_colors	colors;
+// 	t_input		in;
+// 	t_world		world;
+// 	t_cam		cam;
+// 	double		move_speed;
+// 	double		rot_speed;
+// }	t_game;

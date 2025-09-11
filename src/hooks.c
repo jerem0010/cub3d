@@ -6,11 +6,14 @@ int	on_destroy(t_game *g)
 {
 	if (g->gfx.frame.ptr)
 		mlx_destroy_image(g->gfx.mlx, g->gfx.frame.ptr);
+	textures_free(g);
+	world_free(&g->world);
 	if (g->gfx.win)
 		mlx_destroy_window(g->gfx.mlx, g->gfx.win);
 	exit(0);
 	return (0);
 }
+
 
 static void set_key(int key, t_game *g, int press)
 {

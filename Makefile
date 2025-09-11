@@ -21,7 +21,7 @@ endif
 
 # --- Sources ---
 SRCS := src/main.c src/init.c src/hooks.c src/image.c src/draw.c \
-        src/world.c src/player.c src/loop.c src/raycast.c
+        src/world.c src/player.c src/loop.c src/raycast.c src/textures.c
 
 OBJS := $(SRCS:.c=.o)
 

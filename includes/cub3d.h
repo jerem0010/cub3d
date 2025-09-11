@@ -66,6 +66,17 @@ typedef struct s_cam
 	double	plane_y;
 }	t_cam;
 
+typedef struct s_tex
+{
+	void	*ptr;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		w;
+	int		h;
+}	t_tex;
+
 /* State principal */
 typedef struct s_game
 {
@@ -76,6 +87,10 @@ typedef struct s_game
 	t_cam		cam;
 	double		move_speed;
 	double		rot_speed;
+
+	/* --- Textures --- */
+	t_tex		tex[4];    /* 0:N 1:S 2:E 3:W */
+	int			has_tex;  /* 1 si chargées OK */
 }	t_game;
 
 /* init.c */
@@ -107,5 +122,18 @@ void	raycast_frame(t_game *g);
 
 /* loop.c */
 int		game_loop(t_game *g);
+
+/* textures.c */
+int  textures_load(t_game *g, const char *no, const char *so,
+                   const char *we, const char *ea);
+void textures_free(t_game *g);
+unsigned int tex_get_pixel(t_tex *t, int x, int y);
+
+/* draw.c */
+void draw_background(t_game *g);
+void draw_vline(t_game *g, int x, int y0, int y1, int color);
+void draw_tex_vline(t_game *g, int x, int y0, int y1,
+                    t_tex *tex, int tex_x, double step, double tex_pos);
+
 
 #endif
