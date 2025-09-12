@@ -32,7 +32,7 @@ int	main(void)
 	}
 
 	/* place le joueur dans un couloir safe */
-	player_init(&g, 2.5, 2.5, 1.0, 0.0);
+	player_init(&g, 2.5, 2.5, 0.0, 1.0);
 	draw_background(&g);
 
 	mlx_put_image_to_window(g.gfx.mlx, g.gfx.win, g.gfx.frame.ptr, 0, 0);

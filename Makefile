@@ -14,7 +14,7 @@ ifeq ($(OS),Darwin) # macOS
 	MLX_INC   := -I$(MLX_DIR)
 	MLX_FLAGS := -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 else               # Linux
-	MLX_DIR   := minilibx-linux
+	MLX_DIR   := ../minilibx-linux
 	MLX_INC   := -I$(MLX_DIR)
 	MLX_FLAGS := -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz
 endif

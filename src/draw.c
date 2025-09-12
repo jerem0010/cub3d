@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jle-neze <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/12 18:18:26 by jle-neze          #+#    #+#             */
+/*   Updated: 2025/09/12 18:18:52 by jle-neze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	draw_background(t_game *g)
@@ -26,7 +38,7 @@ void	draw_vline(t_game *g, int x, int y0, int y1, int color)
 }
 
 void	draw_tex_vline(t_game *g, int x, int y0, int y1,
-                    t_tex *tex, int tex_x, double step, double tex_pos)
+		t_tex *tex, int tex_x, double step, double tex_pos)
 {
 	if (y0 < 0)
 	{

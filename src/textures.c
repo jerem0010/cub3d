@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jle-neze <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/12 18:24:56 by jle-neze          #+#    #+#             */
+/*   Updated: 2025/09/12 18:24:58 by jle-neze         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 static int	load_one(t_game *g, t_tex *t, const char *path)
@@ -10,12 +22,12 @@ static int	load_one(t_game *g, t_tex *t, const char *path)
 }
 
 int	textures_load(t_game *g, const char *no, const char *so,
-                  const char *we, const char *ea)
+		const char *we, const char *ea)
 {
 	if (load_one(g, &g->tex[0], no)
-	 || load_one(g, &g->tex[1], so)
-	 || load_one(g, &g->tex[2], ea) /* attention: 2 = E */
-	 || load_one(g, &g->tex[3], we)) /* 3 = W */
+			|| load_one(g, &g->tex[1], so)
+			|| load_one(g, &g->tex[2], ea) /* attention: 2 = E */
+			|| load_one(g, &g->tex[3], we)) /* 3 = W */
 	{
 		textures_free(g);
 		return (1);
