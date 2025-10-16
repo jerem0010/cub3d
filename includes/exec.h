@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef EXEC_H
+# define EXEC_H
 
 # include <stdlib.h>
 # include <stdint.h>
 # include <math.h>
-# include <mlx.h>
+# include <../minilibx-linux/mlx.h>
 
 /* Image (framebuffer) */
 typedef struct s_img

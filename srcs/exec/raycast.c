@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub.h"
 
 // /* petite fonction utilitaire: trace une ligne verticale remplie */
 // void	draw_vline(t_game *g, int x, int y0, int y1, int color)

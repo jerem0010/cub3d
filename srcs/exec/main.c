@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "cub.h"
 #include "keys.h"
 
 int	main(void)

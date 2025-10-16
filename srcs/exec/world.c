@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub.h"
 #include <stdlib.h>
 
 // static const char *demo_map[] = {
