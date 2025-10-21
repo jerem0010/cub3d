@@ -42,6 +42,7 @@ int	main(void)
 	world_free(&g.world);
 	return (0);
 }
+
 // typedef struct s_game
 // {
 // 	t_mlx		gfx;

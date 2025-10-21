@@ -11,51 +11,122 @@
 /* ************************************************************************** */
 #include "cub.h"
 
-void	print_int_array(int *array, int size)
-{
-	int	i;
+// void	print_int_array(int *array, int size)
+// {
+// 	int	i;
 
-	if (!array)
-		return ;
-	i = 0;
-	while (i < size)
-	{
-		ft_putnbr_fd(array[i], 1);
-		if (i < size - 1)
-			write(1, ", ", 2);
-		i++;
-	}
-	write(1, "\n", 1);
-}
-void debug(t_data data)
+// 	if (!array)
+// 		return ;
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		ft_putnbr_fd(array[i], 1);
+// 		if (i < size - 1)
+// 			write(1, ", ", 2);
+// 		i++;
+// 	}
+// 	write(1, "\n", 1);
+// }
+// void debug(t_data data)
+// {
+// 	printf("map:\n\n");
+// 	print_array(data.map);
+// 	printf("\n");
+// 	printf("c: ");
+// 	fflush(stdout);
+// 	print_int_array(data.texture->ceiling, 3);
+// 	printf("f: ");
+// 	fflush(stdout);
+// 	print_int_array(data.texture->floor, 3);
+// 	printf("p: ");
+// 	fflush(stdout);
+// 	print_int_array(data.parsing.player, 3);
+// 	printf("\n");
+// 	printf("\ntexture:\n\n");
+// 	printf("%s\n", data.texture->east);
+// 	printf("%s\n", data.texture->north);
+// 	printf("%s\n", data.texture->west);
+// 	printf("%s\n", data.texture->south);
+// }
+
+// int	main(int ac, char **av)
+// {
+// 	t_data	data;
+
+// 	init_data(&data, av[1]);
+// 	if (parsing(&data));
+// 		debug(data);
+// 	free_char_array(data.parsing.raw_map);
+// 	free_textures(data.texture);
+// 	free_data(&data);
+// }
+
+static int	world_init_from_parsing(t_world *world, t_data *data)
 {
-	printf("map:\n\n");
-	print_array(data.map);
-	printf("\n");
-	printf("c: ");
-	fflush(stdout);
-	print_int_array(data.texture->ceiling, 3);
-	printf("f: ");
-	fflush(stdout);
-	print_int_array(data.texture->floor, 3);
-	printf("p: ");
-	fflush(stdout);
-	print_int_array(data.parsing.player, 3);
-	printf("\n");
-	printf("\ntexture:\n\n");
-	printf("%s\n", data.texture->east);
-	printf("%s\n", data.texture->north);
-	printf("%s\n", data.texture->west);
-	printf("%s\n", data.texture->south);
+	int	y;
+
+	world->h = 0;
+	while (data->parsing.raw_map[world->h])
+		world->h++;
+	world->w = ft_strlen(data->parsing.raw_map[0]);
+
+	world->grid = malloc(sizeof(char *) * (world->h + 1));
+	if (!world->grid)
+		return (1);
+	y = 0;
+	while (y < world->h)
+	{
+		world->grid[y] = ft_strdup(data->parsing.raw_map[y]);
+		if (!world->grid[y])
+			return (1);
+		y++;
+	}
+	world->grid[world->h] = NULL;
+	return (0);
 }
+
+
 int	main(int ac, char **av)
 {
+	t_game	g;
 	t_data	data;
 
+	if (ac != 2)
+		return (printf("Usage: ./cub3d <map.cub>\n"), 1);
+
 	init_data(&data, av[1]);
-	if (parsing(&data));
-		debug(data);
-	free_char_array(data.parsing.raw_map);
-	free_textures(data.texture);
+	if (parsing(&data))
+		return (printf("Parsing error\n"), 1);
+
+	/* init couleurs et textures */
+	g.colors.floor = rgb_to_hex(data.texture->floor);
+	g.colors.ceil  = rgb_to_hex(data.texture->ceiling);
+	if (textures_load(&g,
+			data.texture->north, data.texture->south,
+			data.texture->west, data.texture->east) != 0)
+		g.has_tex = 0;
+
+	/* init map et player */
+	if (world_init_from_parsing(&g.world, &data) != 0)
+		return (printf("World init failed\n"), 1);
+	double dx = 0, dy = 0;
+	if (data.parsing.player[2] == 'N') dy = -1;
+	if (data.parsing.player[2] == 'S') dy =  1;
+	if (data.parsing.player[2] == 'E') dx =  1;
+	if (data.parsing.player[2] == 'W') dx = -1;
+	player_init(&g,
+		data.parsing.player[0] + 0.5,
+		data.parsing.player[1] + 0.5,
+		dx, dy);
+
+	/* window + loop */
+	if (init_window(&g, 1024, 768, "cub3D") != 0)
+		return (1);
+	setup_hooks(&g);
+	mlx_loop(g.gfx.mlx);
+
+	world_free(&g.world);
 	free_data(&data);
+	return (0);
 }
+
