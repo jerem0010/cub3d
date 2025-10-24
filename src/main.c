@@ -1,13 +1,31 @@
 #include "cub3d.h"
 #include "keys.h"
 
+int rgb_to_int(int r, int g, int b)
+{
+	if (r < 0) r = 0;
+	if (r > 255) r = 255;
+	if (g < 0) g = 0;
+	if (g > 255) g = 255;
+	if (b < 0) b = 0;
+	if (b > 255) b = 255;
+	return ((r << 16) | (g << 8) | b);
+}
+
 int	main(void)
 {
 	t_game	g;
 
 	/* couleurs de base */
-	g.colors.floor = 0x2D2D2D;
-	g.colors.ceil  = 0x87CEEB;
+	int rC = 135;
+	int gC = 206;
+	int bC = 235;
+	int rF = 220;
+	int gF = 180;
+	int bF = 60;
+
+	g.colors.floor = rgb_to_int(rF, gF, bF);
+	g.colors.ceil  = rgb_to_int(rC, gC, bC);
 	g.colors.wall_nsew[0] = 0xFF3333; /* N */
 	g.colors.wall_nsew[1] = 0x33FF33; /* S */
 	g.colors.wall_nsew[2] = 0x3333FF; /* E */
