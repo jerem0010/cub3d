@@ -61,6 +61,17 @@
 // 	free_data(&data);
 // }
 
+int rgb_to_int(int r, int g, int b)
+{
+	if (r < 0) r = 0;
+	if (r > 255) r = 255;
+	if (g < 0) g = 0;
+	if (g > 255) g = 255;
+	if (b < 0) b = 0;
+	if (b > 255) b = 255;
+	return ((r << 16) | (g << 8) | b);
+}
+
 static int	world_init_from_parsing(t_world *world, t_data *data)
 {
 	int	y;
@@ -99,8 +110,8 @@ int	main(int ac, char **av)
 		return (printf("Parsing error\n"), 1);
 
 	/* init couleurs et textures */
-	g.colors.floor = rgb_to_hex(data.texture->floor);
-	g.colors.ceil  = rgb_to_hex(data.texture->ceiling);
+	g.colors.floor = rgb_to_int(data.texture->floor); // ok jai change le fonction rgb_to_int elle attend 3 int le r le g et le b 
+	g.colors.ceil  = rgb_to_int(data.texture->ceiling);
 	if (textures_load(&g,
 			data.texture->north, data.texture->south,
 			data.texture->west, data.texture->east) != 0)
