@@ -26,8 +26,8 @@ int	textures_load(t_game *g, const char *no, const char *so,
 {
 	if (load_one(g, &g->tex[0], no)
 			|| load_one(g, &g->tex[1], so)
-			|| load_one(g, &g->tex[2], ea) /* attention: 2 = E */
-			|| load_one(g, &g->tex[3], we)) /* 3 = W */
+			|| load_one(g, &g->tex[2], ea)
+			|| load_one(g, &g->tex[3], we))
 	{
 		textures_free(g);
 		return (1);

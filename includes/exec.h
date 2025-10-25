@@ -107,6 +107,7 @@ typedef struct s_game
 
 /* init.c */
 int		init_window(t_game *g, int w, int h, char *title);
+void	cleanup_window(t_game *g);
 
 /* hooks.c */
 int		on_destroy(t_game *g);

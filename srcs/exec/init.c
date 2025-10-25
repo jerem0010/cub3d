@@ -31,3 +31,25 @@ int	init_window(t_game *g, int w, int h, char *title)
 	g->gfx.frame.h = h;
 	return (0);
 }
+
+void	cleanup_window(t_game *g)
+{
+	if (!g)
+		return ;
+	if (g->gfx.frame.ptr)
+	{
+		mlx_destroy_image(g->gfx.mlx, g->gfx.frame.ptr);
+		g->gfx.frame.ptr = NULL;
+	}
+	if (g->gfx.win)
+	{
+		mlx_destroy_window(g->gfx.mlx, g->gfx.win);
+		g->gfx.win = NULL;
+	}
+	if (g->gfx.mlx)
+	{
+		mlx_destroy_display(g->gfx.mlx);
+		free(g->gfx.mlx);
+		g->gfx.mlx = NULL;
+	}
+}

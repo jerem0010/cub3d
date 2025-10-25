@@ -42,7 +42,6 @@ SRCS = \
 	$(SRCDIR)/exec/image.c \
 	$(SRCDIR)/exec/init.c \
 	$(SRCDIR)/exec/loop.c \
-	$(SRCDIR)/exec/main.c \
 	$(SRCDIR)/exec/player.c \
 	$(SRCDIR)/exec/raycast.c \
 	$(SRCDIR)/exec/textures.c \

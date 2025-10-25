@@ -26,7 +26,7 @@ char	**ft_arrcpy(char **array)
 	i = 0;
 	while (i < len)
 	{
-		copy[i] = strdup(array[i]);
+		copy[i] = ft_strdup(array[i]);
 		if (!copy[i])
 		{
 			while (i > 0)

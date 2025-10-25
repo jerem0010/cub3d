@@ -77,9 +77,9 @@ static int	world_init_from_parsing(t_world *world, t_data *data)
 	int	y;
 
 	world->h = 0;
-	while (data->parsing.raw_map[world->h])
+	while (data->map[world->h])
 		world->h++;
-	world->w = ft_strlen(data->parsing.raw_map[0]);
+	world->w = ft_strlen(data->map[0]);
 
 	world->grid = malloc(sizeof(char *) * (world->h + 1));
 	if (!world->grid)
@@ -87,7 +87,7 @@ static int	world_init_from_parsing(t_world *world, t_data *data)
 	y = 0;
 	while (y < world->h)
 	{
-		world->grid[y] = ft_strdup(data->parsing.raw_map[y]);
+		world->grid[y] = ft_strdup(data->map[y]);
 		if (!world->grid[y])
 			return (1);
 		y++;
@@ -97,6 +97,51 @@ static int	world_init_from_parsing(t_world *world, t_data *data)
 }
 
 
+// int	main(int ac, char **av)
+// {
+// 	t_game	g;
+// 	t_data	data;
+
+// 	if (ac != 2)
+// 		return (printf("Usage: ./cub3d <map.cub>\n"), 1);
+
+// 	init_data(&data, av[1]);
+// 	if (parsing(&data))
+// 		return (printf("Parsing error\n"), 1);
+// 	free_char_array(data.parsing.raw_map);
+
+// 	/* init couleurs et textures */
+// 	g.colors.floor = rgb_to_int(data.texture->floor[0], data.texture->floor[1], data.texture->floor[2]); // ok jai change le fonction rgb_to_int elle attend 3 int le r le g et le b 
+// 	g.colors.ceil  = rgb_to_int(data.texture->ceiling[0], data.texture->ceiling[1], data.texture->ceiling[2]);
+// 	if (textures_load(&g,
+// 			data.texture->north, data.texture->south,
+// 			data.texture->west, data.texture->east) != 0)
+// 		g.has_tex = 0;
+
+// 	/* init map et player */
+// 	if (world_init_from_parsing(&g.world, &data) != 0)
+// 		return (printf("World init failed\n"), 1);
+// 	double dx = 0, dy = 0;
+// 	if (data.parsing.player[2] == 'N') dy = -1;
+// 	if (data.parsing.player[2] == 'S') dy =  1;
+// 	if (data.parsing.player[2] == 'E') dx =  1;
+// 	if (data.parsing.player[2] == 'W') dx = -1;
+// 	player_init(&g,
+// 		data.parsing.player[0] + 0.5,
+// 		data.parsing.player[1] + 0.5,
+// 		dx, dy);
+
+// 	/* window + loop */
+// 	if (init_window(&g, 1024, 768, "cub3D") != 0)
+// 		return (1);
+// 	setup_hooks(&g);
+// 	mlx_loop(g.gfx.mlx);
+
+// 	world_free(&g.world);
+// 	free_data(&data);
+// 	return (0);
+// }
+
 int	main(int ac, char **av)
 {
 	t_game	g;
@@ -105,21 +150,21 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (printf("Usage: ./cub3d <map.cub>\n"), 1);
 
+	memset(&g, 0, sizeof(t_game));  // IMPORTANT : initialiser g
+
 	init_data(&data, av[1]);
 	if (parsing(&data))
 		return (printf("Parsing error\n"), 1);
+	free_char_array(data.parsing.raw_map);
 
-	/* init couleurs et textures */
-	g.colors.floor = rgb_to_int(data.texture->floor); // ok jai change le fonction rgb_to_int elle attend 3 int le r le g et le b 
-	g.colors.ceil  = rgb_to_int(data.texture->ceiling);
-	if (textures_load(&g,
-			data.texture->north, data.texture->south,
-			data.texture->west, data.texture->east) != 0)
-		g.has_tex = 0;
+	/* init couleurs */
+	g.colors.floor = rgb_to_int(data.texture->floor[0], data.texture->floor[1], data.texture->floor[2]);
+	g.colors.ceil  = rgb_to_int(data.texture->ceiling[0], data.texture->ceiling[1], data.texture->ceiling[2]);
 
 	/* init map et player */
 	if (world_init_from_parsing(&g.world, &data) != 0)
 		return (printf("World init failed\n"), 1);
+	
 	double dx = 0, dy = 0;
 	if (data.parsing.player[2] == 'N') dy = -1;
 	if (data.parsing.player[2] == 'S') dy =  1;
@@ -130,9 +175,16 @@ int	main(int ac, char **av)
 		data.parsing.player[1] + 0.5,
 		dx, dy);
 
-	/* window + loop */
+	/* window AVANT textures ! */
 	if (init_window(&g, 1024, 768, "cub3D") != 0)
 		return (1);
+
+	/* MAINTENANT on charge les textures */
+	if (textures_load(&g,
+			data.texture->north, data.texture->south,
+			data.texture->west, data.texture->east) != 0)
+		g.has_tex = 0;
+
 	setup_hooks(&g);
 	mlx_loop(g.gfx.mlx);
 
@@ -140,4 +192,3 @@ int	main(int ac, char **av)
 	free_data(&data);
 	return (0);
 }
-
