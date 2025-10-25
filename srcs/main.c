@@ -154,8 +154,12 @@ int	main(int ac, char **av)
 
 	init_data(&data, av[1]);
 	if (parsing(&data))
+	{
+		free_textures(data.texture);
+		free_data(&data);
+		free_char_array(data.parsing.raw_map);
 		return (printf("Parsing error\n"), 1);
-	free_char_array(data.parsing.raw_map);
+	}
 
 	/* init couleurs */
 	g.colors.floor = rgb_to_int(data.texture->floor[0], data.texture->floor[1], data.texture->floor[2]);
@@ -189,6 +193,9 @@ int	main(int ac, char **av)
 	mlx_loop(g.gfx.mlx);
 
 	world_free(&g.world);
+	free_char_array(data.parsing.raw_map);
+	free_textures(data.texture);
 	free_data(&data);
+
 	return (0);
 }
