@@ -69,6 +69,13 @@ char	*get_next_line(int fd)
 	char		*temp;
 	static char	*backup;
 
+	if (fd == -2)
+	{
+		if (backup)
+			free(backup);
+		backup = NULL;
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free(backup), backup = NULL, NULL);
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));

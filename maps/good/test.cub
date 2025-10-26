@@ -1,9 +1,9 @@
 
 
-NO textures/test/north.xpm
-EA textures/test/east.xpm
-WE           textures/test/west.xpm
-SO           textures/test/sud.xpm
+NO assets/n.xpm
+EA assets/e.xpm
+WE assets/w.xpm
+SO assets/s.xpm
 
 
                         
@@ -16,7 +16,7 @@ F                200,200,200
 10001
 10001
 10101
-1S001
+1N01
 1001
 10001
 10001

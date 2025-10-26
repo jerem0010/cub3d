@@ -77,7 +77,7 @@ void	find_player_pos(char **map, int *player)
 
 int	flood_fill(char **map_cp, int x, int y)
 {
-	if (!map_cp[y] || !map_cp[y][x])
+	if (!map_cp || y < 0 || x < 0 || !map_cp[y] || !map_cp[y][x])
 		return (1);
 	if (map_cp[y][x] == 'v')
 		return (0);

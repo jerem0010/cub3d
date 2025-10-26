@@ -37,6 +37,10 @@
 for the same texture."
 # define ERROR_NOT_CLOSE "Map is not closed by walls."
 # define ERROR_NOT_XMP "The texture file is not an xpm image."
+# define ERR_I_N "Texture file provided for north is absent or inaccessible"
+# define ERR_I_S "Texture file provided for south is absent or inaccessible"
+# define ERR_I_E "Texture file provided for east is absent or inaccessible"
+# define ERR_I_W "Texture file provided for west is absent or inaccessible"
 
 typedef struct s_data
 {

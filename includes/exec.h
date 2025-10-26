@@ -90,6 +90,8 @@ typedef struct s_tex
 }	t_tex;
 
 /* State principal */
+typedef struct s_data	t_data;
+
 typedef struct s_game
 {
 	t_mlx		gfx;
@@ -103,6 +105,9 @@ typedef struct s_game
 	/* --- Textures --- */
 	t_tex		tex[4];    /* 0:N 1:S 2:E 3:W */
 	int			has_tex;  /* 1 si chargées OK */
+	
+	/* Pour le cleanup */
+	t_data		*data;     /* pointeur vers data pour cleanup */
 }	t_game;
 
 /* init.c */

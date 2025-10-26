@@ -16,12 +16,15 @@
 
 int	on_destroy(t_game *g)
 {
-	if (g->gfx.frame.ptr)
-		mlx_destroy_image(g->gfx.mlx, g->gfx.frame.ptr);
 	textures_free(g);
+	cleanup_window(g);
 	world_free(&g->world);
-	if (g->gfx.win)
-		mlx_destroy_window(g->gfx.mlx, g->gfx.win);
+	/* Libérer data si disponible */
+	if (g->data)
+	{
+		free_textures(g->data->texture);
+		free_data(g->data);
+	}
 	exit(0);
 	return (0);
 }

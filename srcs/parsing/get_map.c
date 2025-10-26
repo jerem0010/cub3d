@@ -21,7 +21,10 @@ int	get_map(t_data *data)
 		return (ft_error(ERROR_EMPTY), 1);
 	data->parsing.raw_map = ft_calloc(nb_line + 1, sizeof(char *));
 	if (put_map_on_array(data))
+	{
+		free_char_array(data->parsing.raw_map);
 		return (1);
+	}
 	return (0);
 }
 
@@ -40,8 +43,10 @@ int	line_counter(int fd)
 		line = get_next_line(fd);
 	}
 	free(line);
-	line = get_next_line(-1);
-	free(line);
+	/* Vider complètement le buffer après la lecture */
+	while ((line = get_next_line(-1)) != NULL)
+		free(line);
+	get_next_line(-2);
 	return (nb_line);
 }
 
@@ -63,8 +68,7 @@ int	put_map_on_array(t_data *data)
 			{
 				free(line);
 				free(cleaned);
-				line = get_next_line(-1);
-				if (line)
+				while ((line = get_next_line(-1)) != NULL)
 					free(line);
 				return (1);
 			}
@@ -76,10 +80,11 @@ int	put_map_on_array(t_data *data)
 		else
 			data->parsing.raw_map[i++] = line;
 	}
-	line = get_next_line(-1);
-	if (line)
+	while ((line = get_next_line(-1)) != NULL)
 		free(line);
 	data->parsing.raw_map[i] = NULL;
+	/* Vider complètement le buffer après la lecture */
+	get_next_line(-2);
 	return (0);
 }
 

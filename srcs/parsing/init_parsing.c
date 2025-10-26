@@ -42,9 +42,15 @@ int	init_textures(t_textures *textures)
 
 int	free_textures(t_textures *textures)
 {
-	free(textures->north);
-	free(textures->south);
-	free(textures->east);
-	free(textures->west);
+	if (!textures)
+		return (0);
+	if (textures->north)
+		free(textures->north);
+	if (textures->south)
+		free(textures->south);
+	if (textures->east)
+		free(textures->east);
+	if (textures->west)
+		free(textures->west);
 	return (0);
 }

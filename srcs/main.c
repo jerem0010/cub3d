@@ -157,8 +157,7 @@ int	main(int ac, char **av)
 	{
 		free_textures(data.texture);
 		free_data(&data);
-		free_char_array(data.parsing.raw_map);
-		return (printf("Parsing error\n"), 1);
+		return (1);
 	}
 
 	/* init couleurs */
@@ -168,10 +167,13 @@ int	main(int ac, char **av)
 	/* init map et player */
 	if (world_init_from_parsing(&g.world, &data) != 0)
 		return (printf("World init failed\n"), 1);
+	/* Libérer data->map après la duplication vers world->grid */
+	free_char_array(data.map);
+	data.map = NULL;
 	
 	double dx = 0, dy = 0;
-	if (data.parsing.player[2] == 'N') dy = -1;
-	if (data.parsing.player[2] == 'S') dy =  1;
+	if (data.parsing.player[2] == 'S') dy = -1;
+	if (data.parsing.player[2] == 'N') dy =  1;
 	if (data.parsing.player[2] == 'E') dx =  1;
 	if (data.parsing.player[2] == 'W') dx = -1;
 	player_init(&g,
@@ -189,11 +191,15 @@ int	main(int ac, char **av)
 			data.texture->west, data.texture->east) != 0)
 		g.has_tex = 0;
 
+	/* Passer data à g pour le cleanup */
+	g.data = &data;
+	
 	setup_hooks(&g);
+	/* Vider le buffer gnl avant de rentrer dans mlx_loop */
+	get_next_line(-2);
 	mlx_loop(g.gfx.mlx);
 
 	world_free(&g.world);
-	free_char_array(data.parsing.raw_map);
 	free_textures(data.texture);
 	free_data(&data);
 
