@@ -43,49 +43,14 @@ int	line_counter(int fd)
 		line = get_next_line(fd);
 	}
 	free(line);
-	/* Vider complètement le buffer après la lecture */
-	while ((line = get_next_line(-1)) != NULL)
+	line = get_next_line(-1);
+	while (line != NULL)
+	{
 		free(line);
+		line = get_next_line(-1);
+	}
 	get_next_line(-2);
 	return (nb_line);
-}
-
-int	put_map_on_array(t_data *data)
-{
-	char	*line;
-	char	*cleaned;
-	int		i;
-	int		j[6];
-
-	ft_memset(j, 0, sizeof(j));
-	i = 0;
-	while ((line = get_next_line(data->parsing.fd_map_dup)) != NULL)
-	{
-		if (is_config_line(line))
-		{
-			cleaned = clean_line(line);
-			if (get_texture_path(cleaned, data->texture, j))
-			{
-				free(line);
-				free(cleaned);
-				while ((line = get_next_line(-1)) != NULL)
-					free(line);
-				return (1);
-			}
-			free(line);
-			free(cleaned);
-		}
-		else if (is_empty_line(line) && i == 0)
-			free(line);
-		else
-			data->parsing.raw_map[i++] = line;
-	}
-	while ((line = get_next_line(-1)) != NULL)
-		free(line);
-	data->parsing.raw_map[i] = NULL;
-	/* Vider complètement le buffer après la lecture */
-	get_next_line(-2);
-	return (0);
 }
 
 char	*clean_line(char *raw_line)

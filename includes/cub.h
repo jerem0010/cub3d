@@ -54,7 +54,8 @@ typedef struct s_data
 void	ft_error(char *message);
 void	free_char_array(char **array);
 int		ft_arrlen(char **arr);
-void	print_array(char **array);//temp
+void	print_array(char **array);
+int		ft_strlen_2d(char **str);
 
 //init
 int		init_data(t_data *data, char *path);

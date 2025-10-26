@@ -6,7 +6,7 @@
 /*   By: jle-neze <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/12 18:24:37 by jle-neze          #+#    #+#             */
-/*   Updated: 2025/09/12 18:24:41 by jle-neze         ###   ########.fr       */
+/*   Updated: 2025/10/26 02:20:06 by lfirmin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void	raycast_frame(t_game *g)
 			if (side_dist_x < side_dist_y) { side_dist_x += delta_dist_x; map_x += step_x; side = 0; }
 			else                           { side_dist_y += delta_dist_y; map_y += step_y; side = 1; }
 			if (map_x < 0 || map_y < 0 || map_x >= g->world.w || map_y >= g->world.h
-			 || g->world.grid[map_y][map_x] == '1')
+					|| g->world.grid[map_y][map_x] == '1')
 				hit = 1;
 		}
 

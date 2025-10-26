@@ -103,16 +103,6 @@ int	flood_fill(char **map_cp, int x, int y)
 	return (1);
 }
 
-int	ft_strlen_2d(char **str) {
-	int i;
-
-	i = 0;
-	while (str[i])
-		++i;
-
-	return i;
-}
-
 int	rep_ex_wall(char **map_cp, int x, int y)
 {
 	int	len;

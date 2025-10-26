@@ -30,6 +30,7 @@ SRCS = \
 	$(SRCDIR)/parsing/check_file.c \
 	$(SRCDIR)/parsing/init_parsing.c \
 	$(SRCDIR)/parsing/get_map.c \
+	$(SRCDIR)/parsing/get_map_2.c \
 	$(SRCDIR)/parsing/line_detect.c \
 	$(SRCDIR)/parsing/get_textures.c \
 	$(SRCDIR)/parsing/check_colors.c \
