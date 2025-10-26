@@ -70,7 +70,7 @@ endef
 all:
 	@echo "$(BOLD)$(MAGENTA)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║            🎮 CUB3D BUILD 🎮             ║"
+	@echo "║            🎮 CUB3D BUILD 🎮           ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo "$(RESET)"
 	@$(MAKE) -s $(NAME)
@@ -83,42 +83,68 @@ $(MLX_DIR):
 		git clone $(MLX_REPO) $(MLX_DIR) > /dev/null 2>&1; \
 	fi
 	@echo "$(GREEN)✅ MLX42 cloned successfully!$(RESET)"
+	@echo ""
 
 $(MLX): $(MLX_DIR)
 	@echo "$(BOLD)$(BLUE)🔨 Building MLX42...$(RESET)"
 	$(call loading_animation,$(YELLOW)⚙️  Compiling MLX42...)
-	@$(MAKE) -s -C $(MLX_DIR)
+	@$(MAKE) -s -C $(MLX_DIR) > /dev/null 2>&1
 	@echo "$(GREEN)✅ MLX42 built successfully!$(RESET)"
+	@echo ""
 
-$(NAME): $(MLX) $(SRCS) $(INCS)
-	@echo "$(BOLD)$(BLUE)📚 Building libraries...$(RESET)"
-	$(call loading_animation,$(YELLOW)📖 Compiling libft...)
-	@$(MAKE) -s -C libft
-	$(call loading_animation,$(YELLOW)📄 Compiling gnl...)
-	@$(MAKE) -s -C gnl
+$(LIBFT):
+	@echo "$(BOLD)$(BLUE)📚 Building libft...$(RESET)"
+	@$(MAKE) -s -C libft > /dev/null 2>&1 & \
+	PID=$$!; \
+	for i in 1 2 3 4 5 6 7 8 9 10; do \
+		printf "$(CYAN)["; \
+		for j in $$(seq 1 $$i); do printf "█"; done; \
+		for j in $$(seq $$i 9); do printf " "; done; \
+		printf "] $$(($$i * 10))%%$(RESET)\r"; \
+		sleep 0.1; \
+	done; \
+	wait $$PID; \
+	echo ""
+	@echo ""
+
+$(GNL):
+	@echo "$(BOLD)$(BLUE)📚 Building gnl...$(RESET)"
+	@$(MAKE) -s -C gnl > /dev/null 2>&1 & \
+	PID=$$!; \
+	for i in 1 2 3 4 5 6 7 8 9 10; do \
+		printf "$(CYAN)["; \
+		for j in $$(seq 1 $$i); do printf "█"; done; \
+		for j in $$(seq $$i 9); do printf " "; done; \
+		printf "] $$(($$i * 10))%%$(RESET)\r"; \
+		sleep 0.1; \
+	done; \
+	wait $$PID; \
+	echo ""
+	@echo ""
+
+$(NAME): $(MLX) $(LIBFT) $(GNL) $(SRCS) $(INCS)
 	@echo "$(BOLD)$(BLUE)🎯 Building $(NAME)...$(RESET)"
 	$(call loading_animation,$(YELLOW)🚀 Compiling main executable...)
 	@$(CC) -g -I$(INCDIR) -I$(MLX_DIR)/include $(SRCS) -o $(NAME) $(LIBFT) $(GNL) $(MLX) $(MLX_FLAGS)
-	@echo ""
 	@echo "$(BOLD)$(GREEN)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║         🎉 BUILD SUCCESSFUL! 🎉          ║"
+	@echo "║         🎉 BUILD SUCCESSFUL! 🎉        ║"
 	@echo "║                                        ║"
-	@echo "║     Your $(NAME) is ready to use! 🚀      ║"
+	@echo "║     Your $(NAME) is ready to use! 🚀     ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo "$(RESET)"
 
 clean:
 	@echo "$(BOLD)$(YELLOW)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║            🧹 CLEANING UP 🧹             ║"
+	@echo "║            🧹 CLEANING UP 🧹           ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo "$(RESET)"
 	$(call loading_animation,$(YELLOW)🗑️  Cleaning object files...)
 	@rm -f $(NAME)
-	@make clean -s -C libft
-	@make clean -s -C gnl
-	@if [ -d "$(MLX_DIR)" ]; then make clean -s -C $(MLX_DIR); fi
+	@make clean -s -C libft > /dev/null 2>&1
+	@make clean -s -C gnl > /dev/null 2>&1
+	@if [ -d "$(MLX_DIR)" ]; then make clean -s -C $(MLX_DIR) > /dev/null 2>&1; fi
 	@echo "$(GREEN)✅ Clean completed!$(RESET)"
 
 clean1:
@@ -129,19 +155,19 @@ clean1:
 fclean:
 	@echo "$(BOLD)$(RED)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║           💣 DEEP CLEAN 💣               ║"
+	@echo "║           💣 DEEP CLEAN 💣             ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo "$(RESET)"
 	@$(MAKE) -s clean1
 	$(call loading_animation,$(RED)🔥 Full cleanup in progress...)
-	@make fclean -s -C libft
-	@make fclean -s -C gnl
-	@if [ -d "$(MLX_DIR)/minilibx-linux" ]; then make fclean -s -C $(MLX_DIR)/minilibx-linux; fi
+	@make fclean -s -C libft > /dev/null 2>&1
+	@make fclean -s -C gnl > /dev/null 2>&1
+	@if [ -d "$(MLX_DIR)/minilibx-linux" ]; then make fclean -s -C $(MLX_DIR)/minilibx-linux > /dev/null 2>&1; fi
 	@rm -rf $(MLX_DIR)
 	@echo ""
 	@echo "$(BOLD)$(GREEN)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║        ✨ DEEP CLEAN COMPLETE! ✨        ║"
+	@echo "║        ✨ DEEP CLEAN COMPLETE! ✨      ║"
 	@echo "║                                        ║"
 	@echo "║     All files have been removed! 🗑️     ║"
 	@echo "╚════════════════════════════════════════╝"
@@ -150,7 +176,7 @@ fclean:
 re:
 	@echo "$(BOLD)$(MAGENTA)"
 	@echo "╔════════════════════════════════════════╗"
-	@echo "║            🔄 REBUILDING 🔄              ║"
+	@echo "║            🔄 REBUILDING 🔄            ║"
 	@echo "╚════════════════════════════════════════╝"
 	@echo "$(RESET)"
 	@$(MAKE) -s fclean
