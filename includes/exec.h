@@ -110,6 +110,14 @@ typedef struct s_game
 	t_data		*data;     /* pointeur vers data pour cleanup */
 }	t_game;
 
+typedef struct s_texpaths
+{
+	const char	*no;
+	const char	*so;
+	const char	*we;
+	const char	*ea;
+}	t_texpaths;
+
 /* init.c */
 int		init_window(t_game *g, int w, int h, char *title);
 void	cleanup_window(t_game *g);
@@ -142,8 +150,7 @@ void	raycast_frame(t_game *g);
 int		game_loop(t_game *g);
 
 /* textures.c */
-int  textures_load(t_game *g, const char *no, const char *so,
-                   const char *we, const char *ea);
+int	textures_load(t_game *g, t_texpaths *paths);
 void textures_free(t_game *g);
 unsigned int tex_get_pixel(t_tex *t, int x, int y);
 

@@ -146,6 +146,7 @@ int	main(int ac, char **av)
 {
 	t_game	g;
 	t_data	data;
+	t_texpaths tex;
 
 	if (ac != 2)
 		return (printf("Usage: ./cub3d <map.cub>\n"), 1);
@@ -186,10 +187,14 @@ int	main(int ac, char **av)
 		return (1);
 
 	/* MAINTENANT on charge les textures */
-	if (textures_load(&g,
-			data.texture->north, data.texture->south,
-			data.texture->west, data.texture->east) != 0)
+	tex.no = data.texture->north;
+	tex.so = data.texture->south;
+	tex.we = data.texture->west;
+	tex.ea = data.texture->east;
+
+	if (textures_load(&g, &tex) != 0)
 		g.has_tex = 0;
+
 
 	/* Passer data à g pour le cleanup */
 	g.data = &data;
