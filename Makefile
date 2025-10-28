@@ -46,7 +46,8 @@ SRCS = \
 	$(SRCDIR)/exec/player.c \
 	$(SRCDIR)/exec/raycast.c \
 	$(SRCDIR)/exec/textures.c \
-	$(SRCDIR)/exec/world.c
+	$(SRCDIR)/exec/world.c \
+	$(SRCDIR)/exec/raycast_utils.c
 
 # === Includes ===
 INCS = \

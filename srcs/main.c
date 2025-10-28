@@ -147,6 +147,7 @@ int	main(int ac, char **av)
 	t_game	g;
 	t_data	data;
 	t_texpaths tex;
+	t_player_init	p;
 
 	if (ac != 2)
 		return (printf("Usage: ./cub3d <map.cub>\n"), 1);
@@ -172,15 +173,19 @@ int	main(int ac, char **av)
 	free_char_array(data.map);
 	data.map = NULL;
 	
-	double dx = 0, dy = 0;
-	if (data.parsing.player[2] == 'S') dy = -1;
-	if (data.parsing.player[2] == 'N') dy =  1;
-	if (data.parsing.player[2] == 'E') dx =  1;
-	if (data.parsing.player[2] == 'W') dx = -1;
-	player_init(&g,
-		data.parsing.player[0] + 0.5,
-		data.parsing.player[1] + 0.5,
-		dx, dy);
+	p.px = data.parsing.player[0] + 0.5;
+	p.py = data.parsing.player[1] + 0.5;
+	p.dx = 0;
+	p.dy = 0;
+	if (data.parsing.player[2] == 'S')
+		p.dy = -1;
+	if (data.parsing.player[2] == 'N')
+		p.dy = 1;
+	if (data.parsing.player[2] == 'E')
+		p.dx = 1;
+	if (data.parsing.player[2] == 'W')
+		p.dx = -1;
+	player_init(&g, p);
 
 	/* window AVANT textures ! */
 	if (init_window(&g, 1024, 768, "cub3D") != 0)

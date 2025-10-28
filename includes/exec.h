@@ -118,6 +118,64 @@ typedef struct s_texpaths
 	const char	*ea;
 }	t_texpaths;
 
+typedef struct s_player_init
+{
+	double	px;
+	double	py;
+	double	dx;
+	double	dy;
+}	t_player_init;
+
+typedef struct s_texline
+{
+	t_tex	*tex;
+	int		tex_x;
+	double	step;
+	double	tex_pos;
+	int		y0;
+	int		y1;
+}	t_texline;
+
+typedef struct s_vline
+{
+	int	y0;
+	int	y1;
+	int	color;
+}	t_vline;
+
+typedef struct s_ray
+{
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+	int		tex_id;
+}	t_ray;
+
+typedef struct s_col
+{
+	int	draw_start;
+	int	draw_end;
+	int	line_h;
+	double	perp_dist;
+}	t_col;
+
+typedef struct s_texdraw
+{
+	int		x;
+	t_ray	*r;
+	t_tex	*t;
+	t_col	c;
+}	t_texdraw;
+
+
 /* init.c */
 int		init_window(t_game *g, int w, int h, char *title);
 void	cleanup_window(t_game *g);
@@ -133,14 +191,14 @@ void	img_put_pixel(t_img *img, int x, int y, int color);
 
 /* draw.c */
 void	draw_background(t_game *g);
-void	draw_vline(t_game *g, int x, int y0, int y1, int color);
+void	draw_vline(t_game *g, int x, t_vline v);
 
 /* world.c */
-int		world_init_demo(t_world *w);
+// int		world_init_demo(t_world *w);
 void	world_free(t_world *w);
 
 /* player.c */
-void	player_init(t_game *g, double px, double py, double dx, double dy);
+void player_init(t_game *g, t_player_init p);
 void	player_update(t_game *g);
 
 /* raycast.c */
@@ -156,9 +214,10 @@ unsigned int tex_get_pixel(t_tex *t, int x, int y);
 
 /* draw.c */
 void draw_background(t_game *g);
-void draw_vline(t_game *g, int x, int y0, int y1, int color);
-void draw_tex_vline(t_game *g, int x, int y0, int y1,
-                    t_tex *tex, int tex_x, double step, double tex_pos);
+// void draw_vline(t_game *g, int x, int y0, int y1, int color);
+void	draw_tex_vline(t_game *g, int x, t_texline l);
 
+void	draw_textured_column(t_game *g, int x, t_ray *r, t_tex *t,
+	int draw_start, int line_h);
 
 #endif
