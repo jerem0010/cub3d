@@ -73,9 +73,16 @@
 
 void	world_free(t_world *w)
 {
-	if (!w->grid) return ;
-	for (int y = 0; y < w->h; y++)
+	int	y;
+
+	if (!w->grid)
+		return ;
+	y = 0;
+	while (y < w->h)
+	{
 		free(w->grid[y]);
+		y++;
+	}
 	free(w->grid);
 	w->grid = NULL;
 }
