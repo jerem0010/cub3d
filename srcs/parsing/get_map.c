@@ -6,7 +6,7 @@
 /*   By: lfirmin <lfirmin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 13:29:28 by lfirmin           #+#    #+#             */
-/*   Updated: 2025/10/07 10:13:07 by lfirmin          ###   ########.fr       */
+/*   Updated: 2025/11/03 09:02:55 by lfirmin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	get_map(t_data *data)
 	if (nb_line <= 0)
 		return (ft_error(ERROR_EMPTY), 1);
 	data->parsing.raw_map = ft_calloc(nb_line + 1, sizeof(char *));
+	if (!data->parsing.raw_map)
+		return (1);
 	if (put_map_on_array(data))
 	{
 		free_char_array(data->parsing.raw_map);
@@ -60,5 +62,7 @@ char	*clean_line(char *raw_line)
 	if (!raw_line)
 		return (NULL);
 	cleaned = ft_strtrim(raw_line, " \t\n\r");
+	if (!cleaned)
+		return (NULL);
 	return (cleaned);
 }

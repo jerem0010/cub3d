@@ -21,13 +21,12 @@ static int	load_one(t_game *g, t_tex *t, const char *path)
 	return (0);
 }
 
-int	textures_load(t_game *g, const char *no, const char *so,
-		const char *we, const char *ea)
+int	textures_load(t_game *g, t_texpaths *paths)
 {
-	if (load_one(g, &g->tex[0], no)
-			|| load_one(g, &g->tex[1], so)
-			|| load_one(g, &g->tex[2], we)
-			|| load_one(g, &g->tex[3], ea))
+	if (load_one(g, &g->tex[0], paths->no)
+		|| load_one(g, &g->tex[1], paths->so)
+		|| load_one(g, &g->tex[2], paths->we)
+		|| load_one(g, &g->tex[3], paths->ea))
 	{
 		textures_free(g);
 		return (1);
@@ -38,16 +37,22 @@ int	textures_load(t_game *g, const char *no, const char *so,
 
 void	textures_free(t_game *g)
 {
-	for (int i = 0; i < 4; i++)
+	int	i;
+
+	i = 0;
+	while (i < 4)
 	{
 		if (g->tex[i].ptr)
 			mlx_destroy_image(g->gfx.mlx, g->tex[i].ptr);
 		g->tex[i].ptr = NULL;
+		i++;
 	}
 }
 
 unsigned int	tex_get_pixel(t_tex *t, int x, int y)
 {
-	char	*px = t->addr + (y * t->line_len + x * (t->bpp / 8));
+	char	*px;
+
+	px = t->addr + (y * t->line_len + x * (t->bpp / 8));
 	return (*(unsigned int *)px);
 }

@@ -52,13 +52,20 @@ typedef struct s_data
 
 //utils
 void	ft_error(char *message);
-void	free_char_array(char **array);
+int		rgb_to_int(int r, int g, int b);
 int		ft_arrlen(char **arr);
 void	print_array(char **array);
 int		ft_strlen_2d(char **str);
 
 //init
 int		init_data(t_data *data, char *path);
+int		world_init_from_parsing(t_world *world, t_data *data);
+int		init_game_data(t_game *g, t_data *data, char *map_file);
+void	init_player_direction(t_player_init *p, char direction);
+int		init_mlx_and_textures(t_game *g, t_data *data);
+
+//free.c
 void	free_data(t_data *data);
+void	free_char_array(char **array);
 
 #endif

@@ -11,18 +11,31 @@
 /* ************************************************************************** */
 #include "cub.h"
 
+static int	assign_texture(char *line, char **dest)
+{
+	char	*path;
+
+	path = ft_strtrim(line + 2, " \t\n\r");
+	if (!path)
+		return (ft_error("Memory allocation failed"), -1);
+	*dest = path;
+	return (0);
+}
+
 int	get_texture_path(char *line, t_textures *texture, int *j)
 {
+	if (!line)
+		return (-1);
 	if (check_extension_2(line) && !is_color_line(line))
 		return (ft_error(ERROR_NOT_XMP), 1);
 	else if (is_texture_line(line) == 1 && j[0]++ == 0)
-		texture->north = ft_strtrim(line + 2, " \t\n\r");
+		return (assign_texture(line, &texture->north));
 	else if (is_texture_line(line) == 2 && j[1]++ == 0)
-		texture->south = ft_strtrim(line + 2, " \t\n\r");
+		return (assign_texture(line, &texture->south));
 	else if (is_texture_line(line) == 3 && j[2]++ == 0)
-		texture->west = ft_strtrim(line + 2, " \t\n\r");
+		return (assign_texture(line, &texture->west));
 	else if (is_texture_line(line) == 4 && j[3]++ == 0)
-		texture->east = ft_strtrim(line + 2, " \t\n\r");
+		return (assign_texture(line, &texture->east));
 	else if (is_color_line(line) == 1 && j[4]++ == 0)
 		get_rgb_values(line, texture->floor);
 	else if (is_color_line(line) == 2 && j[5]++ == 0)

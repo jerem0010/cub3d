@@ -6,7 +6,7 @@
 /*   By: lfirmin <lfirmin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 11:58:39 by lfirmin           #+#    #+#             */
-/*   Updated: 2025/10/08 14:05:47 by lfirmin          ###   ########.fr       */
+/*   Updated: 2025/11/03 09:03:03 by lfirmin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	check_extension_2(char *str)
 {
 	size_t	len;
 
+	if (!str)
+		return (1);
 	len = strlen(str);
 	if (len < 4)
 		return (1);
@@ -39,7 +41,7 @@ int	is_config_line(char *line)
 		|| ft_strncmp(trimmed, "EA ", 3) == 0
 		|| ft_strncmp(trimmed, "F ", 2) == 0
 		|| ft_strncmp(trimmed, "C ", 2) == 0)
-	result = 1;
+		result = 1;
 	free(trimmed);
 	return (result);
 }

@@ -62,20 +62,30 @@ static char	*extract(char *line)
 	return (backup);
 }
 
+static char	*process_line(char *line, char **backup)
+{
+	char	*temp;
+
+	*backup = extract(line);
+	temp = ft_strdup_g(line);
+	free(line);
+	if (!temp)
+	{
+		free(*backup);
+		*backup = NULL;
+		return (NULL);
+	}
+	return (temp);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*buf;
-	char		*temp;
 	static char	*backup;
 
 	if (fd == -2)
-	{
-		if (backup)
-			free(backup);
-		backup = NULL;
-		return (NULL);
-	}
+		return (free(backup), backup = NULL, NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (free(backup), backup = NULL, NULL);
 	buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
@@ -83,15 +93,9 @@ char	*get_next_line(int fd)
 		return (free(backup), backup = NULL, NULL);
 	line = sort_and_store(fd, buf, backup);
 	free(buf);
-	buf = NULL;
 	if (!line)
 		return (free(backup), backup = NULL, NULL);
-	backup = extract(line);
-	temp = ft_strdup_g(line);
-	free(line);
-	if (!temp)
-		return (free(backup), backup = NULL, NULL);
-	return (temp);
+	return (process_line(line, &backup));
 }
 
 // int main()

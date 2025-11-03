@@ -31,6 +31,8 @@ int	check_extension(char *map_path)
 {
 	int	len_map_path;
 
+	if (!map_path)
+		return (1);
 	len_map_path = ft_strlen(map_path);
 	if (len_map_path < 4)
 		return (ft_error(ERROR_EXT), 1);

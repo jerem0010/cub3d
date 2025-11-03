@@ -16,6 +16,8 @@ static int	process_config_line(char *line, t_data *data, int *j)
 	char	*cleaned;
 
 	cleaned = clean_line(line);
+	if (!cleaned)
+		return (-1);
 	if (get_texture_path(cleaned, data->texture, j))
 	{
 		free(line);

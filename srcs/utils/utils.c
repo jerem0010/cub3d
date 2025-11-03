@@ -24,18 +24,6 @@ void	ft_error(char *message)
 	write(2, "\n", 1);
 }
 
-void	free_char_array(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
-
 int	ft_arrlen(char **arr)
 {
 	int	i;
@@ -67,4 +55,21 @@ int	ft_strlen_2d(char **str)
 	while (str[i])
 		++i;
 	return (i);
+}
+
+int	rgb_to_int(int r, int g, int b)
+{
+	if (r < 0)
+		r = 0;
+	if (r > 255)
+		r = 255;
+	if (g < 0)
+		g = 0;
+	if (g > 255)
+		g = 255;
+	if (b < 0)
+		b = 0;
+	if (b > 255)
+		b = 255;
+	return ((r << 16) | (g << 8) | b);
 }

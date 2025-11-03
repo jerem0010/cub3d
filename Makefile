@@ -38,6 +38,7 @@ SRCS = \
 	$(SRCDIR)/parsing/check_map_2.c \
 	$(SRCDIR)/utils/init.c \
 	$(SRCDIR)/utils/utils.c \
+	$(SRCDIR)/utils/free.c \
 	$(SRCDIR)/exec/draw.c \
 	$(SRCDIR)/exec/hooks.c \
 	$(SRCDIR)/exec/image.c \
@@ -46,7 +47,8 @@ SRCS = \
 	$(SRCDIR)/exec/player.c \
 	$(SRCDIR)/exec/raycast.c \
 	$(SRCDIR)/exec/textures.c \
-	$(SRCDIR)/exec/world.c
+	$(SRCDIR)/exec/world.c \
+	$(SRCDIR)/exec/raycast_utils.c
 
 # === Includes ===
 INCS = \
