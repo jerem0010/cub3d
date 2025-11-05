@@ -21,7 +21,7 @@ void	player_init(t_game *g, t_player_init p)
 	g->cam.dir_y = p.dy;
 	g->cam.plane_x = -p.dy * 0.66;
 	g->cam.plane_y = p.dx * 0.66;
-	g->move_speed = 0.07;
+	g->move_speed = 0.03;
 	g->rot_speed = 0.05;
 }
 
